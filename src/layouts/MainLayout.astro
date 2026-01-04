@@ -1,0 +1,31 @@
+---
+import Button from "../components/Button.astro";
+import SearchBar from "../components/SearchBar.astro";
+import SecondaryButton from "../components/SecondaryButton.astro";
+import '../styles/global.css'
+---
+
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    </head>
+    <body>
+        <nav
+            class={`h-[51px] p-[10px_10px_10px] lg:p-[10px_30px_11px] w-full z-10 bg-white flex fixed border-b border-solid border-b-[#e8e8e8]` }
+        >
+            <div class="lg:pr-32">
+                <a href="/">
+                    <span
+                        class="block bg-[url(https://web.archive.org/web/20150611000903im_/https://s.ytimg.com/yts/imgbin/www-hitchhiker-vfldzd94_.png)] bg-youtube w-[72px] h-[30px] mr-2 lg:mr-auto"
+                    ></span>
+                </a>
+            </div>
+            <SearchBar />
+            <div class="ml-auto mt-0 flex gap-4 mb-[0.05rem] lg:flex">
+                <Button> Concha </Button>
+                <SecondaryButton>Meiggs</SecondaryButton>
+            </div>
+        </nav>
+        <slot />
+    </body>
+</html>

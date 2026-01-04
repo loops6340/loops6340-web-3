@@ -1,0 +1,118 @@
+---
+import SubscribeButtonIcon from "../../assets/subscribe_button.png";
+import YoutubeIcons from "../../assets/youtube-icons.png";
+interface Props {
+  title: string;
+  author: string;
+  views: string;
+}
+
+const { title, author, views } = Astro.props;
+---
+
+<div class="lg:w-[855px] flex flex-col gap-[0.65rem]">
+  <div class="relative max-w-[855px] h-[510px] w-full bg-black">
+    <slot name="video"/>
+    <slot name="video-react-player" />
+  </div>
+
+  <div
+    class="bg-white pt-[0.65rem] pl-[0.90rem] pr-[0.90rem] pb-[0.55rem] flex flex-col gap-[0.4rem] shadow-[0_1px_2px_rgba(0,0,0,.1)]"
+  >
+    <span class="text-[24px] text-[#222] font-normal">
+      {title}
+    </span>
+    <div class="flex border-b-[#e2e2e2] border-b pb-1">
+      <div class="flex gap-[0.6rem]">
+        <a href="https://www.youtube.com/@loops-ud9us" target="_blank">
+          <img
+            width={48}
+            height={48}
+            src={"https://yt3.googleusercontent.com/qyPzgQzbKsOu2b350GjOMQ70dX9l5tBvDHxmGAD9nLZoqhnE76pi0RIKGjMNkliRe3bDzoC6=s160-c-k-c0x00ffffff-no-rj"}
+          />
+        </a>
+        <div class="flex flex-col gap-[0.6rem]">
+          <a
+            href="https://www.youtube.com/@loops-ud9us"
+            target="_blank"
+            class="text-[13px] p-0 leading-3 font-medium"
+          >
+            {author}
+          </a>
+          <div class="flex pl-px">
+            <a
+              class="flex gap-[0.38rem] rounded-l-[0.15rem] text-white bg-[#e62117] px-1.5 py-[5px] pb-[4.5px] text-[12px]"
+              href="https://www.youtube.com/@loops-ud9us"
+              target="_blank"
+            >
+              <div class="flex">
+                <img
+                  class="m-auto min-h-3"
+                  height={12}
+                  src={SubscribeButtonIcon.src}
+                  alt=""
+                />
+              </div>
+              <span class="leading-3.5 font-normal p-0"> Subscribe </span>
+            </a>
+            <span
+              class="h-6 leading-6 px-[6.5px] pr-[6.5px] rounded-r-[0.05rem] border border-solid border-[#ccc] bg-[#fafafa] text-[#777777] text-[11px]"
+            >
+              309
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="relative flex flex-col ml-auto mt-auto pt-[1.60rem] pb-0 mb-0 text-[19px] text-[#777777]"
+      >
+        <span>{views}</span>
+        <div
+          class="absolute h-0.5 ml-auto bg-[#167ac6] w-[155px] top-[3.55rem] right-[0.40rem]"
+        >
+        </div>
+      </div>
+    </div>
+    <div class="ml-[0.1rem] flex gap-[23px]">
+      <div class="flex gap-[0.4rem] text-[11.5px] text-[#777777]">
+        <button
+          class="opacity-[.5] bg-yt-icons bg-addto-button h-5 w-5 mt-[3px]"
+        ></button>
+        <div class="mt-[5px]">Add to</div>
+      </div>
+      <div class="flex gap-[0.4rem] text-[11.5px] text-[#777777]">
+        <button
+          class="opacity-[.5] bg-yt-icons bg-share-button h-5 w-5 mt-[3px]"
+        ></button>
+        <div class="mt-[5px]">Share</div>
+      </div>
+      <div class="flex gap-[0.4rem] text-[11.5px] text-[#777777]">
+        <button class="opacity-[.5] bg-yt-icons bg-more-button h-5 w-5 mt-[3px]"
+        ></button>
+        <div class="mt-[5px]">More</div>
+      </div>
+
+      <div class="ml-auto gap-4 flex text-[11px]">
+        <div class="flex gap-[0.4rem] text-[#777777]">
+          <button
+            class="opacity-[.5] bg-yt-icons bg-like-button h-5 w-5 mt-[3px]"
+          ></button>
+          <div class="mt-1.5">15,914</div>
+        </div>
+        <div class="flex gap-[0.4rem] text-[#777777]">
+          <button
+            class="opacity-[.5] bg-yt-icons bg-deslike-button h-5 w-5 mt-[3px]"
+          ></button>
+          <div class="mt-1.5">642</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="bg-white pt-[0.65rem] pl-[0.90rem] pr-[0.90rem] pb-[0.65rem] shadow-[0_1px_2px_rgba(0,0,0,.1)]"
+  >
+    <span class="text-[14px] text-[#222] font-medium"> Hace 19 años </span>
+    <slot />
+  </div>
+</div>

@@ -1,0 +1,27 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+import VideoSection from "../../components/VideoSelectorUI/VideoSection.astro";
+import MainLayout from "../../layouts/MainLayout.astro";
+import VideoSelectorLayout from "../../layouts/VideoSelectorLayout.astro";
+import VideoSelectorStaticContentLayout from "../../layouts/VideoSelectorStaticContentLayout.astro";
+---
+
+<MainLayout>
+    <VideoSelectorLayout>
+        <VideoSelectorStaticContentLayout>
+            <VideoSection
+                author="pawer ranger rojo"
+                title="ola"
+                views={"12,072,006"}
+            >
+                <div slot="video" class="w-full h-full flex">
+                    <img
+                        class="max-h-full align-middle items-center justify-center ml-auto mr-auto"
+                        src="https://ih1.redbubble.net/image.795196398.7959/flat,750x,075,f-pad,750x1000,f8f8f8.u2.jpg"
+                    />
+                </div>
+            </VideoSection>
+        </VideoSelectorStaticContentLayout>
+    </VideoSelectorLayout>
+</MainLayout>

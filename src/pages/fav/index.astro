@@ -1,16 +1,15 @@
 ---
-import BaseHead from "../components/BaseHead.astro";
-import Button from "../components/Button.astro";
-import SearchBar from "../components/SearchBar.astro";
-import SecondaryButton from "../components/SecondaryButton.astro";
-import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
-import SideBar from "../components/MainPage/SiderBar.astro";
-import VideoThumbnail from "../components/VideoThumbnail.astro";
+import BaseHead from "../../components/BaseHead.astro";
+import Button from "../../components/Button.astro";
+import SearchBar from "../../components/SearchBar.astro";
+import SecondaryButton from "../../components/SecondaryButton.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+import SideBar from "../../components/MainPage/SiderBar.astro";
+import VideoThumbnail from "../../components/VideoThumbnail.astro";
 import { getCollection } from "astro:content";
-import MainLayout from "../layouts/MainLayout.astro";
+import MainLayout from "../../layouts/MainLayout.astro";
 const proyectos = await getCollection("proyectos");
 ---
-
 <MainLayout>
   <main class="flex min-h-screen flex-col">
     <div class="flex">

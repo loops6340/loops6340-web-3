@@ -1,0 +1,43 @@
+---
+import { getCollection } from "astro:content";
+import SideVideo from "../components/VideoSelectorUI/SideVideo.astro";
+import SideVideosSection from "../components/VideoSelectorUI/SideVideosSection.astro";
+
+const musica = await getCollection("musica")
+---
+
+<slot />
+    <SideVideosSection>
+        {/* {projectData
+          .filter((project) => project.id !== 309)
+          .map((project, i) => (
+            <SideVideo
+              key={i}
+              title={project.title}
+              href={`/project/${project.id}`}
+              thumbnail={project.thumbnail!}
+              author="Loops"
+              date={project.date}
+            />
+          ))} */}
+
+        {/* <h2>cancioens::</h2> */}
+        {musica.map(({data}, i) => (
+          <SideVideo
+            title={data.title}
+            href={`/music/${new URL(data.url)?.searchParams.get("v")}`}
+            thumbnail={data.thumbnail}
+            author={data.channel_name}
+            date={""}
+          />
+        ))}
+        <!-- {Data.games.map((props, i) => (
+          <SideVideo
+            title={props.title}
+            href={`/games/${encodeURIComponent(props.url)}`}
+            thumbnail={props.thumnbail}
+            author="nose"
+            date={""}
+          />
+        ))} -->
+      </SideVideosSection>

@@ -1,0 +1,37 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+import MainLayout from "../../layouts/MainLayout.astro";
+import VideoSection from "../../components/VideoSelectorUI/VideoSection.astro";
+import VideoSelectorLayout from "../../layouts/VideoSelectorLayout.astro";
+import VideoSelectorStaticLayout from "../../layouts/VideoSelectorStaticContentLayout.astro";
+import { render } from "astro:content";
+
+export const getStaticPaths = (async () => {
+    const projects = await getCollection("proyectos");
+    return projects.map((project) => ({
+        params: { name: project.id},
+        props: project,
+    }));
+}) satisfies GetStaticPaths;
+
+type Props = CollectionEntry<"proyectos">;
+
+const project = Astro.props;
+
+const {Content} = await render(project)
+---
+
+<MainLayout>
+    <VideoSelectorLayout>
+        <VideoSelectorStaticLayout>
+            <VideoSection
+                title={project.data.title}
+                author="loops"
+                views={"309,309,309"}
+            >
+                <Content />
+            </VideoSection>
+        </VideoSelectorStaticLayout>
+    </VideoSelectorLayout>
+</MainLayout>

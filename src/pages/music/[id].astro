@@ -1,0 +1,45 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+import VideoSection from "../../components/VideoSelectorUI/VideoSection.astro";
+import MainLayout from "../../layouts/MainLayout.astro";
+import VideoSelectorLayout from "../../layouts/VideoSelectorLayout.astro";
+import VideoSelectorStaticContentLayout from "../../layouts/VideoSelectorStaticContentLayout.astro";
+import {Player} from '../../components/VideoSelectorUI/Player.tsx'
+export const getStaticPaths = (async () => {
+    const projects = await getCollection("musica");
+    return projects.map((project) => ({
+        params: {
+            id: new URL(project.data.url).searchParams.get("v") as string,
+        },
+        props: project,
+    }));
+}) satisfies GetStaticPaths;
+
+type Props = CollectionEntry<"musica">;
+
+const { data } = Astro.props;
+---
+
+<MainLayout>
+    <VideoSelectorLayout>
+        <VideoSelectorStaticContentLayout>
+            <VideoSection
+                author={data.channel_name}
+                title={data.title}
+                views={"348923"}
+            >
+                <Player client:visible slot="video-react-player" src={`https://www.youtube.com/embed/${new URL(data.url).searchParams.get("v")}?autoplay=1&mute=1&rel=0`} />
+                <!-- <iframe
+                    slot="video"
+                    class="w-full h-full"
+
+                    src={`https://www.youtube.com/embed/${new URL(data.url).searchParams.get("v")}?autoplay=1&mute=1`}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                >
+                </iframe> -->
+            </VideoSection>
+        </VideoSelectorStaticContentLayout>
+    </VideoSelectorLayout>
+</MainLayout>

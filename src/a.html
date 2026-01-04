@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>Reproductor Custom Funcional</title>
+<style>
+    body {
+        background: #111;
+        display: flex;
+        justify-content: center;
+        padding-top: 40px;
+        font-family: Arial, sans-serif;
+    }
+
+    .player {
+        width: 720px;
+        background: #000;
+        color: #fff;
+        font-size: 14px;
+        user-select: none;
+    }
+
+    video {
+        width: 100%;
+        display: block;
+        background: #000;
+    }
+
+    /* Barra de progreso */
+    .progress-container {
+        width: 100%;
+        height: 6px;
+        background: #555;
+        cursor: pointer;
+        position: relative;
+    }
+    .progress-bar {
+        height: 100%;
+        width: 0%;
+        background: #e60000;
+    }
+    .scrubber {
+        width: 14px;
+        height: 14px;
+        background: #fff;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        left: 0%;
+        cursor: pointer;
+        box-shadow: 0 0 4px #000;
+    }
+
+    .controls {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 12px;
+    }
+
+    .left-controls, .right-controls {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    /* Iconos simples */
+    .icon {
+        width: 18px;
+        height: 18px;
+        background: #ccc;
+        border-radius: 3px;
+        opacity: 0.8;
+        cursor: pointer;
+    }
+
+    .time {
+        opacity: 0.9;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="player">
+
+    <!-- VIDEO DE PRUEBA -->
+    <video id="video" src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
+
+    <!-- BARRA DE PROGRESO -->
+    <div class="progress-container" id="progressContainer">
+        <div class="progress-bar" id="progressBar"></div>
+        <div class="scrubber" id="scrubber"></div>
+    </div>
+
+    <!-- CONTROLES -->
+    <div class="controls">
+        <div class="left-controls">
+            <div class="icon" id="playBtn"></div>
+            <div class="icon"></div>
+            <div class="icon" id="volBtn"></div>
+            <span class="time" id="time">0:00 / 0:00</span>
+        </div>
+        <div class="right-controls">
+            <div class="icon"></div>
+            <div class="icon"></div>
+            <div class="icon" id="settingsBtn"></div>
+            <div class="icon"></div>
+            <div class="icon" id="fsBtn"></div>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+const video = document.getElementById("video");
+const playBtn = document.getElementById("playBtn");
+const volBtn = document.getElementById("volBtn");
+const fsBtn = document.getElementById("fsBtn");
+const time = document.getElementById("time");
+
+const progressContainer = document.getElementById("progressContainer");
+const progressBar = document.getElementById("progressBar");
+const scrubber = document.getElementById("scrubber");
+
+let isDragging = false;
+
+/* PLAY / PAUSA */
+playBtn.onclick = () => {
+    if (video.paused) video.play(); else video.pause();
+};
+
+/* VOLUMEN MUTE */
+volBtn.onclick = () => {
+    video.muted = !video.muted;
+};
+
+/* FULLSCREEN */
+fsBtn.onclick = () => {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else video.requestFullscreen();
+};
+
+/* ACTUALIZAR TIEMPO */
+video.ontimeupdate = () => {
+    const pct = (video.currentTime / video.duration) * 100;
+    progressBar.style.width = pct + "%";
+    scrubber.style.left = pct + "%";
+    updateTime();
+};
+
+video.onloadedmetadata = updateTime;
+
+function updateTime() {
+    const format = t => {
+        const m = Math.floor(t / 60);
+        const s = Math.floor(t % 60).toString().padStart(2, "0");
+        return `${m}:${s}`;
+    };
+    time.textContent = `${format(video.currentTime)} / ${format(video.duration)}`;
+}
+
+/* CLICK PARA SALTAR */
+progressContainer.onclick = (e) => {
+    const rect = progressContainer.getBoundingClientRect();
+    const pos = (e.clientX - rect.left) / rect.width;
+    video.currentTime = pos * video.duration;
+};
+
+/* ARRASTRAR SCRUBBER */
+scrubber.onmousedown = () => {
+    isDragging = true;
+};
+
+document.onmouseup = () => {
+    isDragging = false;
+};
+
+document.onmousemove = (e) => {
+    if (!isDragging) return;
+
+    const rect = progressContainer.getBoundingClientRect();
+    let pos = (e.clientX - rect.left) / rect.width;
+    pos = Math.max(0, Math.min(1, pos)); // límite 0-1
+    video.currentTime = pos * video.duration;
+};
+</script>
+
+</body>
+</html>
+
